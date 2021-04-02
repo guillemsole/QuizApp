@@ -28,6 +28,7 @@
 		63DA89232617820600E4D806 /* QuizEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63DA89212617820500E4D806 /* QuizEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63DA89272617836100E4D806 /* NavigationControllerRouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA89262617836100E4D806 /* NavigationControllerRouterTest.swift */; };
 		63DA892A2617840100E4D806 /* NavigationControllerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA89292617840100E4D806 /* NavigationControllerRouter.swift */; };
+		63DA8930261795B200E4D806 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA892F261795B200E4D806 /* Question.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		63DA89212617820500E4D806 /* QuizEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QuizEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DA89262617836100E4D806 /* NavigationControllerRouterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerRouterTest.swift; sourceTree = "<group>"; };
 		63DA89292617840100E4D806 /* NavigationControllerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerRouter.swift; sourceTree = "<group>"; };
+		63DA892F261795B200E4D806 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 				63DA88C52617658900E4D806 /* CorrectAnswerCell.swift */,
 				63DA88C92617659000E4D806 /* WrongAnswerCell.swift */,
 				63DA89292617840100E4D806 /* NavigationControllerRouter.swift */,
+				63DA892F261795B200E4D806 /* Question.swift */,
 			);
 			path = QuizApp;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				63DA88C62617658900E4D806 /* CorrectAnswerCell.swift in Sources */,
 				63DA88BE2617654800E4D806 /* UITableView+Extension.swift in Sources */,
 				63DA88C22617657100E4D806 /* PresentableAnswer.swift in Sources */,
+				63DA8930261795B200E4D806 /* Question.swift in Sources */,
 				63DA88CA2617659000E4D806 /* WrongAnswerCell.swift in Sources */,
 				63DA892A2617840100E4D806 /* NavigationControllerRouter.swift in Sources */,
 				63DA889A2616190600E4D806 /* QuestionViewController.swift in Sources */,
