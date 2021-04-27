@@ -10,8 +10,17 @@ public protocol QuizDelegate {
     associatedtype Answer
     
     func answer(for question: Question, completion: @escaping (Answer) -> Void)
+    
+    func didCompleteQuiz(withAnswers: [(question: Question, answer: Answer)]) // tells
+    
+    @available(*, deprecated, message: "use didCompleteQuiz(withAnswers:) instead")
     func handle(result: Result<Question, Answer>)
-//    
-//    func answer(for question: Question, completion: @escaping (Answer) -> Void) // asks
-//    func didCompleteQuiz(withAnswers: [(question: Question, answer: Answer)]) // tells
+
+}
+
+#warning("Delete this at some point")
+public extension QuizDelegate {
+    func didCompleteQuiz(withAnswers: [(question: Question, answer: Answer)]) {
+        
+    }
 }
