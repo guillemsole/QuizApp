@@ -12,9 +12,15 @@ public final class Quiz {
         self.flow = flow
     }
 
-    public static func start<Question, Answer: Equatable, Delegate: QuizDelegate>(questions: [Question], delegate: Delegate, correctAnswers: [Question: Answer]) -> Quiz where Delegate.Question == Question, Delegate.Answer == Answer {
+    public static func start<Delegate: QuizDelegate>(questions: [Delegate.Question], delegate: Delegate, correctAnswers: [Delegate.Question: Delegate.Answer]) -> Quiz where Delegate.Answer: Equatable {
         let flow = Flow(questions: questions, delegate: delegate, scoring: { scoring($0, correctAnswer: correctAnswers) })
         flow.start()
         return  Quiz(flow: flow)
+    }
+}
+
+func scoring<Question: Hashable, Answer: Equatable>(_ answers: [Question: Answer], correctAnswer: [Question: Answer]) -> Int {
+    return answers.reduce(0) { (score, tuple) in
+        return score + (correctAnswer[tuple.key] == tuple.value ? 1 : 0)
     }
 }
