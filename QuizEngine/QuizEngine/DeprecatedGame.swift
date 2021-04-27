@@ -16,6 +16,11 @@ public protocol Router {
     func routeTo(result: Result<Question, Answer>)
 }
 
+@available(*, deprecated)
+public struct Result<Question: Hashable, Answer> {
+    public let answers: [Question: Answer]
+    public let score: Int
+}
 
 @available(*, deprecated)
 public class Game<Question, Answer, R: Router> {

@@ -10,13 +10,11 @@
 		63DA882F26151BDB00E4D806 /* QuizEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63DA882526151BDA00E4D806 /* QuizEngine.framework */; };
 		63DA884426151C9600E4D806 /* FlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA884326151C9600E4D806 /* FlowTest.swift */; };
 		63DA884826151DD100E4D806 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA884726151DD100E4D806 /* Flow.swift */; };
-		63DA88CE2617751C00E4D806 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA88CD2617751C00E4D806 /* Result.swift */; };
 		63DA88D6261775BE00E4D806 /* DeprecatedGameTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA88D5261775BE00E4D806 /* DeprecatedGameTest.swift */; };
 		63DA88DA2617767D00E4D806 /* DeprecatedGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA88D92617767D00E4D806 /* DeprecatedGame.swift */; };
 		63DA88F3261780BD00E4D806 /* QuizEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63DA88EA261780BC00E4D806 /* QuizEngine.framework */; };
 		63DA890D2617812400E4D806 /* DeprecatedGameTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA88D5261775BE00E4D806 /* DeprecatedGameTest.swift */; };
 		63DA890E2617812400E4D806 /* FlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA884326151C9600E4D806 /* FlowTest.swift */; };
-		63DA89142617813B00E4D806 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA88CD2617751C00E4D806 /* Result.swift */; };
 		63DA89162617813B00E4D806 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA884726151DD100E4D806 /* Flow.swift */; };
 		63DA89172617813B00E4D806 /* DeprecatedGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA88D92617767D00E4D806 /* DeprecatedGame.swift */; };
 		63DC081B2638631000994F55 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC081A2638631000994F55 /* Quiz.swift */; };
@@ -50,7 +48,6 @@
 		63DA883526151BDB00E4D806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63DA884326151C9600E4D806 /* FlowTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTest.swift; sourceTree = "<group>"; };
 		63DA884726151DD100E4D806 /* Flow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
-		63DA88CD2617751C00E4D806 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		63DA88D5261775BE00E4D806 /* DeprecatedGameTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeprecatedGameTest.swift; sourceTree = "<group>"; };
 		63DA88D92617767D00E4D806 /* DeprecatedGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeprecatedGame.swift; sourceTree = "<group>"; };
 		63DA88EA261780BC00E4D806 /* QuizEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QuizEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,7 +117,6 @@
 			children = (
 				63DA882926151BDA00E4D806 /* Info.plist */,
 				63DA884726151DD100E4D806 /* Flow.swift */,
-				63DA88CD2617751C00E4D806 /* Result.swift */,
 				63E497FF26371B28006A3765 /* Question.swift */,
 				63DA88D92617767D00E4D806 /* DeprecatedGame.swift */,
 				63F3C4DD263837E200BC579C /* QuizDelegate.swift */,
@@ -315,7 +311,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				63E4980026371B28006A3765 /* Question.swift in Sources */,
-				63DA88CE2617751C00E4D806 /* Result.swift in Sources */,
 				63DC081B2638631000994F55 /* Quiz.swift in Sources */,
 				63DA884826151DD100E4D806 /* Flow.swift in Sources */,
 				63DA88DA2617767D00E4D806 /* DeprecatedGame.swift in Sources */,
@@ -339,7 +334,6 @@
 			files = (
 				63E4981F2637F8D8006A3765 /* Question.swift in Sources */,
 				63DA89162617813B00E4D806 /* Flow.swift in Sources */,
-				63DA89142617813B00E4D806 /* Result.swift in Sources */,
 				63DA89172617813B00E4D806 /* DeprecatedGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
