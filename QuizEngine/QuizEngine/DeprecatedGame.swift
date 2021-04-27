@@ -44,7 +44,6 @@ private class QuizDelegateToRouterAdapter<R: Router>: QuizDelegate where R.Answe
     }
     
     func handle(result: Result<R.Question, R.Answer>) {
-        router.routeTo(result: result)
     }
     
     func didCompleteQuiz(withAnswers answers: [(question: R.Question, answer: R.Answer)]) {
@@ -62,4 +61,12 @@ private class QuizDelegateToRouterAdapter<R: Router>: QuizDelegate where R.Answe
     func answer(for question: R.Question, completion: @escaping (R.Answer) -> Void) {
         router.routeTo(question: question, answerCallback: completion)
     }
+    
+    private func scoring(_ answers: [R.Question: R.Answer], correctAnswer: [R.Question: R.Answer]) -> Int {
+        return answers.reduce(0) { (score, tuple) in
+            return score + (correctAnswer[tuple.key] == tuple.value ? 1 : 0)
+        }
+    }
 }
+
+
