@@ -18,23 +18,23 @@ class DeprecatedGameTest: XCTestCase {
 
     }
     func test_startGame_answerZeroOutOfTwoCorrectly_scoresZero() {
-        router.answerCallback("wrong")
-        router.answerCallback("wrong")
+        router.answerCompletion("wrong")
+        router.answerCompletion("wrong")
         
         XCTAssertEqual(router.routedResult!.score, 0)
     }
     
     func test_startGame_answerOneOutOfTwoCorrectly_scoresOne() {
-        router.answerCallback("A1")
-        router.answerCallback("wrong")
+        router.answerCompletion("A1")
+        router.answerCompletion("wrong")
         
         XCTAssertEqual(router.routedResult!.score, 1)
     }
     
     
     func test_startGame_answerTwoOutOfTwoCorrectly_scoresTwo() {
-        router.answerCallback("A1")
-        router.answerCallback("A2")
+        router.answerCompletion("A1")
+        router.answerCompletion("A2")
         
         XCTAssertEqual(router.routedResult!.score, 2)
     }
@@ -43,11 +43,11 @@ class DeprecatedGameTest: XCTestCase {
         var routedResult: Result<String, String>? = nil
         var routedQuestions: [String] = []
         
-        var answerCallback: (String) -> Void = { _ in }
+        var answerCompletion: (String) -> Void = { _ in }
         
         func routeTo(question: String, answerCallback: @escaping (String) -> Void) {
             routedQuestions.append(question)
-            self.answerCallback = answerCallback
+            self.answerCompletion = answerCallback
         }
         
         func routeTo(result: Result<String, String>) {
