@@ -59,7 +59,7 @@ class FlowTest: XCTestCase {
         let sut = makeSUT(questions: ["Q1"])
         sut.start()
         
-        delegate.answerCompletion("A1")
+        delegate.answerCompletions[0]("A1")
 
         XCTAssertEqual(delegate.questionsAsked, ["Q1"])
     }
