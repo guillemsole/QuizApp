@@ -53,6 +53,7 @@ private class SubmitButtonController: NSObject {
     private func setup() {
         button.target = self
         button.action = #selector(fireCallback)
+        updateButtonState()
     }
     
     func update (_ model: [String]) {

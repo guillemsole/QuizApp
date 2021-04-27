@@ -29,13 +29,12 @@
 		63DA88C22617657100E4D806 /* PresentableAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA88C12617657100E4D806 /* PresentableAnswer.swift */; };
 		63DA88C62617658900E4D806 /* CorrectAnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA88C52617658900E4D806 /* CorrectAnswerCell.swift */; };
 		63DA88CA2617659000E4D806 /* WrongAnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA88C92617659000E4D806 /* WrongAnswerCell.swift */; };
-		63DA89222617820500E4D806 /* QuizEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63DA89212617820500E4D806 /* QuizEngine.framework */; };
-		63DA89232617820600E4D806 /* QuizEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63DA89212617820500E4D806 /* QuizEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63DA89272617836100E4D806 /* NavigationControllerRouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA89262617836100E4D806 /* NavigationControllerRouterTest.swift */; };
 		63DA892A2617840100E4D806 /* NavigationControllerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA89292617840100E4D806 /* NavigationControllerRouter.swift */; };
-		63DA8930261795B200E4D806 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA892F261795B200E4D806 /* Question.swift */; };
 		63DA89342618632A00E4D806 /* iOSViewControllerFactoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA89332618632A00E4D806 /* iOSViewControllerFactoryTest.swift */; };
 		63DA89372618647400E4D806 /* iOSViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA89362618647400E4D806 /* iOSViewControllerFactory.swift */; };
+		63E4981B2637F85B006A3765 /* QuizEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E4981A2637F85B006A3765 /* QuizEngine.framework */; };
+		63E4981C2637F85B006A3765 /* QuizEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63E4981A2637F85B006A3765 /* QuizEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +54,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				63DA89232617820600E4D806 /* QuizEngine.framework in Embed Frameworks */,
+				63E4981C2637F85B006A3765 /* QuizEngine.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,12 +88,11 @@
 		63DA88C12617657100E4D806 /* PresentableAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableAnswer.swift; sourceTree = "<group>"; };
 		63DA88C52617658900E4D806 /* CorrectAnswerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectAnswerCell.swift; sourceTree = "<group>"; };
 		63DA88C92617659000E4D806 /* WrongAnswerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrongAnswerCell.swift; sourceTree = "<group>"; };
-		63DA89212617820500E4D806 /* QuizEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QuizEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DA89262617836100E4D806 /* NavigationControllerRouterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerRouterTest.swift; sourceTree = "<group>"; };
 		63DA89292617840100E4D806 /* NavigationControllerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerRouter.swift; sourceTree = "<group>"; };
-		63DA892F261795B200E4D806 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		63DA89332618632A00E4D806 /* iOSViewControllerFactoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSViewControllerFactoryTest.swift; sourceTree = "<group>"; };
 		63DA89362618647400E4D806 /* iOSViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSViewControllerFactory.swift; sourceTree = "<group>"; };
+		63E4981A2637F85B006A3765 /* QuizEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QuizEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63DA89222617820500E4D806 /* QuizEngine.framework in Frameworks */,
+				63E4981B2637F85B006A3765 /* QuizEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +152,6 @@
 				63DA88C52617658900E4D806 /* CorrectAnswerCell.swift */,
 				63DA88C92617659000E4D806 /* WrongAnswerCell.swift */,
 				63DA89292617840100E4D806 /* NavigationControllerRouter.swift */,
-				63DA892F261795B200E4D806 /* Question.swift */,
 				63DA89362618647400E4D806 /* iOSViewControllerFactory.swift */,
 				631AF3EA2619044C006F32FC /* ResultsPresenter.swift */,
 				631AF3F326191553006F32FC /* QuestionPresenter.swift */,
@@ -181,7 +178,7 @@
 		63DA89202617820500E4D806 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				63DA89212617820500E4D806 /* QuizEngine.framework */,
+				63E4981A2637F85B006A3765 /* QuizEngine.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -299,7 +296,6 @@
 				63DA89372618647400E4D806 /* iOSViewControllerFactory.swift in Sources */,
 				63DA88BE2617654800E4D806 /* UITableView+Extension.swift in Sources */,
 				63DA88C22617657100E4D806 /* PresentableAnswer.swift in Sources */,
-				63DA8930261795B200E4D806 /* Question.swift in Sources */,
 				63DA88CA2617659000E4D806 /* WrongAnswerCell.swift in Sources */,
 				631AF3F426191553006F32FC /* QuestionPresenter.swift in Sources */,
 				63DA892A2617840100E4D806 /* NavigationControllerRouter.swift in Sources */,

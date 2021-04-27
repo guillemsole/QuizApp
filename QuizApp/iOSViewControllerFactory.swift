@@ -8,10 +8,16 @@ import QuizEngine
 class iOSViewControllerFactory: ViewControllerFactory {
     private let questions: [Question<String>]
     private let options: [Question<String>: [String]]
-    
-    init(questions: [Question<String>], options: [Question<String>: [String]]) {
+    private let correctAnswers: [Question<String>: [String]]
+
+    init(
+        questions: [Question<String>],
+        options: [Question<String>: [String]],
+        correctAnswers: [Question<String>: [String]]
+    ) {
         self.questions = questions
         self.options = options
+        self.correctAnswers = correctAnswers
     }
 
     func questionViewController(for question: Question<String>, answerCallback: @escaping ([String]) -> Void) -> UIViewController {
@@ -20,10 +26,6 @@ class iOSViewControllerFactory: ViewControllerFactory {
         }
         
         return questionViewController(for: question, options: options, answerCallback: answerCallback)
-    }
-    
-    func resultViewController(for result: Result<Question<String>, [String]>) -> UIViewController {
-        return UIViewController()
     }
     
     private func questionViewController(for question: Question<String>, options: [String], answerCallback: @escaping ([String]) -> Void) -> UIViewController {
@@ -41,6 +43,11 @@ class iOSViewControllerFactory: ViewControllerFactory {
         let controller = QuestionViewController(question: value, options: options, allowsMultipleSelection: allowsMultipleSelection, selection: answerCallback)
         controller.title = presenter.title
         return controller
+    }
+    
+    func resultViewController(for result: Result<Question<String>, [String]>) -> UIViewController {
+        let presenter = ResultsPresenter(result: result, questions: questions, correctAnswers: correctAnswers)
+        return ResultViewController(summary: presenter.summary, answers: presenter.presentableAnswers)
     }
 
 }
