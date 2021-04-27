@@ -83,8 +83,9 @@ class FlowTest: XCTestCase {
         delegate.answerCompletion("A2")
 
         XCTAssertEqual(delegate.completedQuizzes.count, 1)
-        XCTAssertTrue(delegate.completedQuizzes[0].elementsEqual([("Q1", "A1"),("Q2", "A2")], by: ==))
+        assertEqual(delegate.completedQuizzes[0], [("Q1", "A1"),("Q2", "A2")])
     }
+
     
     func test_startAndAnswerFirstQuestionAndSecond_withTwoQuestions_scoresWithRightAnswer() {
         var receivedAnswers: [String: String] = [:]
@@ -120,6 +121,11 @@ class FlowTest: XCTestCase {
     
     func makeSUT(questions: [String], scoring: @escaping ([String: String]) -> Int = { _ in return 0 }) -> Flow<DelegateSpy> {
         return Flow(questions: questions, delegate: delegate, scoring: scoring)
+    }
+    
+    
+    private func assertEqual(_ a1: [(String, String)], _ a2: [(String, String)], file: StaticString = #file, line: UInt = #line) {
+        XCTAssertTrue(a1.elementsEqual(a2, by: ==), "\(a1) is not equal to \(a2)", file: file, line: line)
     }
     
     class DelegateSpy: QuizDelegate {
