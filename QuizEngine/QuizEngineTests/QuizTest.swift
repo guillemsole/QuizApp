@@ -12,12 +12,12 @@ final class Quiz {
     private init(flow: Any) {
         self.flow = flow
     }
+
     static func start<Question, Answer: Equatable, Delegate: QuizDelegate>(questions: [Question], delegate: Delegate, correctAnswers: [Question: Answer]) -> Quiz where Delegate.Question == Question, Delegate.Answer == Answer {
         let flow = Flow(questions: questions, delegate: delegate, scoring: { scoring($0, correctAnswer: correctAnswers) })
         flow.start()
         return  Quiz(flow: flow)
     }
-
 }
 
 class QuizTest: XCTestCase {
@@ -52,19 +52,19 @@ class QuizTest: XCTestCase {
         XCTAssertEqual(delegate.handledResult!.score, 2)
     }
     
-    private class DelegateSpy: QuizDelegate {
+    private class DelegateSpy: QuizDelegate {        
         
         var handledResult: Result<String, String>? = nil
         var handledQuestions: [String] = []
         
         var answerCallback: (String) -> Void = { _ in }
         
-        func handled(question: String, answerCallback: @escaping (String) -> Void) {
+        func handle(question: String, answerCallback: @escaping (String) -> Void) {
             handledQuestions.append(question)
             self.answerCallback = answerCallback
         }
         
-        func handled(result: Result<String, String>) {
+        func handle(result: Result<String, String>) {
             handledResult = result
         }
     }
