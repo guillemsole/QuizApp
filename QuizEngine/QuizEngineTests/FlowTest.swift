@@ -108,19 +108,4 @@ class FlowTest: XCTestCase {
     func makeSUT(questions: [String]) -> Flow<DelegateSpy> {
         return Flow(questions: questions, delegate: delegate)
     }
-    
-    class DelegateSpy: QuizDelegate {
-        var questionsAsked: [String] = []
-        var answerCompletions: [(String) -> Void] = []
-        var completedQuizzes: [[(String, String)]] = []
-        
-        func didCompleteQuiz(withAnswers answers: [(question: String, answer: String)]) {
-            completedQuizzes.append(answers)
-        }
-        
-        func answer(for question: String, completion: @escaping (String) -> Void) {
-            questionsAsked.append(question)
-            answerCompletions.append(completion)
-        }
-    }
 }
