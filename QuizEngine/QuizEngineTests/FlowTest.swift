@@ -75,34 +75,6 @@ class FlowTest: XCTestCase {
         XCTAssertEqual(delegate.handledResult!.answers, ["Q1": "A1", "Q2": "A2"])
     }
     
-    func test_startAndAnswerFirstQuestionAndSecond_withTwoQuestions_scores() {
-        let sut = makeSUT(questions: ["Q1", "Q2"], scoring: { _ in return 10 })
-        sut.start()
-        
-        delegate.answerCompletion("A1")
-        delegate.answerCompletion("A2")
-
-        XCTAssertEqual(delegate.completedQuizzes.count, 1)
-        assertEqual(delegate.completedQuizzes[0], [("Q1", "A1"),("Q2", "A2")])
-    }
-
-    
-    func test_startAndAnswerFirstQuestionAndSecond_withTwoQuestions_scoresWithRightAnswer() {
-        var receivedAnswers: [String: String] = [:]
-        let sut = makeSUT(questions: ["Q1", "Q2"], scoring: { answers in
-            receivedAnswers = answers
-            return 20
-        })
-        
-        sut.start()
-        
-        delegate.answerCompletion("A1")
-        delegate.answerCompletion("A2")
-
-
-        XCTAssertEqual(receivedAnswers, ["Q1": "A1", "Q2": "A2"])
-    }
-    
     func test_start_withOneQuestion_doesNotCompleteQuiz() {
         makeSUT(questions: ["Q1"]).start()
         
@@ -119,8 +91,8 @@ class FlowTest: XCTestCase {
     
     // MARK: Helpers
     
-    func makeSUT(questions: [String], scoring: @escaping ([String: String]) -> Int = { _ in return 0 }) -> Flow<DelegateSpy> {
-        return Flow(questions: questions, delegate: delegate, scoring: scoring)
+    func makeSUT(questions: [String]) -> Flow<DelegateSpy> {
+        return Flow(questions: questions, delegate: delegate)
     }
     
     
