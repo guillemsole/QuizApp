@@ -6,35 +6,53 @@ import Foundation
 import XCTest
 import QuizEngine // We don't make it teastable it means we are testing the public interface and as an integration test this is what we want
 // Integration test
-class GameTest: XCTestCase {
+@available(*, deprecated)
+class DeprecatedGameTest: XCTestCase {
     
-    let delegate = DelegateSpy()
-    var game: Game<String, String, DelegateSpy>!
+    let router = RouterSpy()
+    var game: Game<String, String, RouterSpy>!
     
     override func setUp() {
         super.setUp()
-        game = startGame(questions: ["Q1","Q2"], delegate: delegate, correctAnswers: ["Q1": "A1", "Q2": "A2"])
+        game = startGame(questions: ["Q1","Q2"], router: router, correctAnswers: ["Q1": "A1", "Q2": "A2"])
 
     }
     func test_startGame_answerZeroOutOfTwoCorrectly_scoresZero() {
-        delegate.answerCallback("wrong")
-        delegate.answerCallback("wrong")
+        router.answerCallback("wrong")
+        router.answerCallback("wrong")
         
-        XCTAssertEqual(delegate.handledResult!.score, 0)
+        XCTAssertEqual(router.routedResult!.score, 0)
     }
     
     func test_startGame_answerOneOutOfTwoCorrectly_scoresOne() {
-        delegate.answerCallback("A1")
-        delegate.answerCallback("wrong")
+        router.answerCallback("A1")
+        router.answerCallback("wrong")
         
-        XCTAssertEqual(delegate.handledResult!.score, 1)
+        XCTAssertEqual(router.routedResult!.score, 1)
     }
     
     
     func test_startGame_answerTwoOutOfTwoCorrectly_scoresTwo() {
-        delegate.answerCallback("A1")
-        delegate.answerCallback("A2")
+        router.answerCallback("A1")
+        router.answerCallback("A2")
         
-        XCTAssertEqual(delegate.handledResult!.score, 2)
+        XCTAssertEqual(router.routedResult!.score, 2)
     }
 }
+
+class RouterSpy: Router {
+    var routedQuestions: [String] = []
+    var routedResult: Result<String, String>? = nil
+    
+    var answerCallback: (String) -> Void = { _ in }
+    
+    func routeTo(question: String, answerCallback: @escaping (String) -> Void) {
+        routedQuestions.append(question)
+        self.answerCallback = answerCallback
+    }
+    
+    func routeTo(result: Result<String, String>) {
+        routedResult = result
+    }
+}
+

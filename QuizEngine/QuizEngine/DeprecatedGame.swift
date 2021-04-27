@@ -28,7 +28,7 @@ public class Game<Question, Answer, R: Router> where R.Question == Question, R.A
 
 @available(*, deprecated)
 public func startGame<Question, Answer: Equatable, R: Router>(questions: [Question], router: R, correctAnswers: [Question: Answer]) -> Game<Question, Answer, R> {
-    let flow = Flow(questions: questions, delegate: QuizDelegateToRouterAdapter(router: router), scoring: { scoring($0, correctAnswer: correctAnswers) })
+    let flow = Flow(questions: questions, delegate: QuizDelegateToRouterAdapter(router), scoring: { scoring($0, correctAnswer: correctAnswers) })
     flow.start()
     return  Game(flow: flow)
 }
@@ -40,20 +40,19 @@ private func scoring<Question: Hashable, Answer: Equatable>(_ answers: [Question
     }
 }
 
-struct QuizDelegateToRouterAdapter<R: Router>: QuizDelegate where R.Question == QuizDelegate.Question, R.Answer == QuizEngine.Answer {
-    
-    let router: Router
+struct QuizDelegateToRouterAdapter<R: Router>: QuizDelegate {
+        
+    let router: R
 
-    init(router: Router) {
+    init(_ router: R) {
         self.router = router
     }
     
-    
-    func handle(result: Result<Question, Answer>) {
+    func handle(result: Result<R.Question, R.Answer>) {
         self.router.routeTo(result: result)
     }
     
-    func handle(question: Question, answerCallback: @escaping (Answer) -> Void) {
+    func handle(question: R.Question, answerCallback: @escaping (R.Answer) -> Void) {
         self.router.routeTo(question: question, answerCallback: answerCallback)
     }
 }
