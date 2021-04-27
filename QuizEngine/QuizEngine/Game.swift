@@ -7,16 +7,16 @@
 
 import Foundation
 
-public class Game<Question, Answer, R: Router> where R.Question == Question, R.Answer == Answer{
-    let flow: Flow<Question, Answer, R>
+public class Game<Question, Answer, Delegate: QuizDelegate> where Delegate.Question == Question, Delegate.Answer == Answer{
+    let flow: Flow<Delegate>
     
-    init(flow: Flow<Question, Answer, R>) {
+    init(flow: Flow<Delegate>) {
         self.flow = flow
     }
 }
 
-public func startGame<Question, Answer: Equatable, R: Router>(questions: [Question], router: R, correctAnswers: [Question: Answer]) -> Game<Question, Answer, R> {
-    let flow = Flow(questions: questions, router: router, scoring: { scoring($0, correctAnswer: correctAnswers) })
+public func startGame<Question, Answer: Equatable, Delegate: QuizDelegate>(questions: [Question], delegate: Delegate, correctAnswers: [Question: Answer]) -> Game<Question, Answer, Delegate> {
+    let flow = Flow(questions: questions, delegate: delegate, scoring: { scoring($0, correctAnswer: correctAnswers) })
     flow.start()
     return  Game(flow: flow)
 }
