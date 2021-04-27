@@ -12,14 +12,29 @@ class QuizTest: XCTestCase {
     
     func test_startQuiz_answerAllQuestions_completesWithAnswers() {
         let delegate = DelegateSpy()
-        quiz = Quiz.start(questions: ["Q1","Q2"], delegate: delegate)
+        quiz = Quiz.start(questions: ["Q1", "Q2"], delegate: delegate)
 
-        delegate.answerCompletion("A1")
-        delegate.answerCompletion("A2")
+        delegate.answersCompletion[0]("A1")
+        delegate.answersCompletion[1]("A2")
         
         XCTAssertEqual(delegate.completedQuizzes.count, 1)
         assertEqual(delegate.completedQuizzes[0], [("Q1", "A1"), ("Q2", "A2")])
     }
+    
+//    func test_startQuiz_answerAllQuestions_completesWithNewAnswers() {
+//        let delegate = DelegateSpy()
+//        quiz = Quiz.start(questions: ["Q1","Q2"], delegate: delegate)
+//
+//        delegate.answerCompletion("A1")
+//        delegate.answerCompletion("A2")
+//
+//        delegate.answerCompletion("A1-1")
+//        delegate.answerCompletion("A2-2")
+//
+//        XCTAssertEqual(delegate.completedQuizzes.count, 1)
+//        assertEqual(delegate.completedQuizzes[0], [("Q1", "A1"), ("Q2", "A2")])
+//        assertEqual(delegate.completedQuizzes[1], [("Q1", "A1-1"), ("Q2", "A2-2")])
+//    }
     
     private func assertEqual(_ a1: [(String, String)], _ a2: [(String, String)], file: StaticString = #file, line: UInt = #line) {
         XCTAssertTrue(a1.elementsEqual(a2, by: ==), "\(a1) is not equal to \(a2)", file: file, line: line)
@@ -28,7 +43,7 @@ class QuizTest: XCTestCase {
     private class DelegateSpy: QuizDelegate {
         var completedQuizzes: [[(String, String)]] = []
         
-        var answerCompletion: (String) -> Void = { _ in }
+        var answersCompletion: [(String) -> Void] = []
         
         func handle(result: Result<String, String>) {
         }
@@ -38,7 +53,7 @@ class QuizTest: XCTestCase {
         }
         
         func answer(for question: String, completion: @escaping (String) -> Void) {
-            self.answerCompletion = completion
+            self.answersCompletion.append(completion)
         }
     }
 }
