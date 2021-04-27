@@ -18,7 +18,7 @@ public protocol Router {
 
 
 @available(*, deprecated)
-public class Game<Question, Answer, R: Router> where R.Question == Question, R.Answer == Answer{
+public class Game<Question, Answer, R: Router> {
     let flow: Any
     
     init(flow: Any) {
@@ -27,7 +27,7 @@ public class Game<Question, Answer, R: Router> where R.Question == Question, R.A
 }
 
 @available(*, deprecated)
-public func startGame<Question, Answer: Equatable, R: Router>(questions: [Question], router: R, correctAnswers: [Question: Answer]) -> Game<Question, Answer, R> {
+public func startGame<Question, Answer: Equatable, R: Router>(questions: [Question], router: R, correctAnswers: [Question: Answer]) -> Game<Question, Answer, R> where R.Question == Question, R.Answer == Answer {
     let flow = Flow(questions: questions, delegate: QuizDelegateToRouterAdapter(router), scoring: { scoring($0, correctAnswer: correctAnswers) })
     flow.start()
     return  Game(flow: flow)
@@ -40,9 +40,9 @@ private func scoring<Question: Hashable, Answer: Equatable>(_ answers: [Question
     }
 }
 
-struct QuizDelegateToRouterAdapter<R: Router>: QuizDelegate {
-        
-    let router: R
+@available(*, deprecated)
+private class QuizDelegateToRouterAdapter<R: Router>: QuizDelegate {
+    private let router: R
 
     init(_ router: R) {
         self.router = router
