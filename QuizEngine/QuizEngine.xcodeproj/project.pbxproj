@@ -25,6 +25,7 @@
 		63DA89172617813B00E4D806 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA88D92617767D00E4D806 /* Game.swift */; };
 		63E4980026371B28006A3765 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E497FF26371B28006A3765 /* Question.swift */; };
 		63E4981F2637F8D8006A3765 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E497FF26371B28006A3765 /* Question.swift */; };
+		63F3C4DE263837E200BC579C /* QuizDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F3C4DD263837E200BC579C /* QuizDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		63DA88EA261780BC00E4D806 /* QuizEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QuizEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DA88F2261780BD00E4D806 /* QuizEngine_iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizEngine_iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63E497FF26371B28006A3765 /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		63F3C4DD263837E200BC579C /* QuizDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				63E497FF26371B28006A3765 /* Question.swift */,
 				63DA88D12617752400E4D806 /* Router.swift */,
 				63DA88D92617767D00E4D806 /* Game.swift */,
+				63F3C4DD263837E200BC579C /* QuizDelegate.swift */,
 			);
 			path = QuizEngine;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				63DA88D22617752400E4D806 /* Router.swift in Sources */,
 				63DA884826151DD100E4D806 /* Flow.swift in Sources */,
 				63DA88DA2617767D00E4D806 /* Game.swift in Sources */,
+				63F3C4DE263837E200BC579C /* QuizDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
