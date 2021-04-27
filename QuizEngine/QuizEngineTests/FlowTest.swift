@@ -64,13 +64,13 @@ class FlowTest: XCTestCase {
         XCTAssertEqual(delegate.handledQuestions, ["Q1"])
     }
     
-    func test_start_withNoQuestions_delegatesResult() {
+    func test_start_withNoQuestions_delegatesResultHandling() {
         makeSUT(questions: []).start()
         
         XCTAssertEqual(delegate.handledResult!.answers, [:])
     }
     
-    func test_startAndAnswerFirstQuestionAndSecond_withTwoQuestions_delegatesResult() {
+    func test_startAndAnswerFirstQuestionAndSecond_withTwoQuestions_delegatesResultHandling() {
         let sut = makeSUT(questions: ["Q1", "Q2"])
         sut.start()
         
@@ -108,6 +108,12 @@ class FlowTest: XCTestCase {
         XCTAssertEqual(receivedAnswers, ["Q1": "A1", "Q2": "A2"])
     }
     
+    func test_start_withOneQuestion_doesNotCompleteQuiz() {
+        makeSUT(questions: ["Q1"]).start()
+        
+        XCTAssertTrue(delegate.handledResult!.answers, [:])
+    }
+    
     // MARK: Helpers
     
     func makeSUT(questions: [String], scoring: @escaping ([String: String]) -> Int = { _ in return 0 }) -> Flow<DelegateSpy> {
@@ -115,9 +121,9 @@ class FlowTest: XCTestCase {
     }
     
     class DelegateSpy: QuizDelegate {
-        var handledResult: Result<String, String>? = nil
-
         var handledQuestions: [String] = []
+        var handledResult: Result<String, String>? = nil
+        var completedQuizzes: [(String, String)] = []
         
         var answerCompletion: (String) -> Void = { _ in }
         
