@@ -49,8 +49,8 @@ class FlowTest: XCTestCase {
         let sut = makeSUT(questions: ["Q1", "Q2", "Q3"])
         sut.start()
         
-        delegate.answerCompletion("A1")
-        delegate.answerCompletion("A2")
+        delegate.answersCompletion[0]("A1")
+        delegate.answersCompletion[1]("A2")
 
         XCTAssertEqual(delegate.questionsAsked, ["Q1", "Q2", "Q3"])
     }
@@ -77,6 +77,27 @@ class FlowTest: XCTestCase {
         XCTAssertTrue(delegate.completedQuizzes[0].isEmpty)
 
     }
+    func test_startAndAnswerFirstAndSecondQuestion_withTwoQuestion_completesQuiz() {
+        let sut = makeSUT(questions: ["Q1", "Q2"])
+        sut.start()
+        
+        delegate.answersCompletion[0]("A1")
+        delegate.answersCompletion[1]("A2")
+        
+        XCTAssertEqual(delegate.completedQuizzes.count, 1)
+        assertEqual(delegate.completedQuizzes[0], [("Q1", "A1"), ("Q2", "A2")])
+    }
+    
+//    func test_startAndAnswerFirstAndSecondQuestionTwice_withTwoQuestion_completesQuizTwice() {
+//        let sut = makeSUT(questions: ["Q1", "Q2"])
+//        sut.start()
+//
+//        delegate.answerCompletion("A1")
+//        delegate.answerCompletion("A2")
+//
+//        XCTAssertEqual(delegate.completedQuizzes.count, 1)
+//        assertEqual(delegate.completedQuizzes[0], [("Q1", "A1"), ("Q2", "A2")])
+//    }
     
     // MARK: Helpers
     
@@ -91,10 +112,11 @@ class FlowTest: XCTestCase {
     
     class DelegateSpy: QuizDelegate {
         var questionsAsked: [String] = []
+        var answersCompletion: [(String) -> Void] = []
+
         var handledResult: Result<String, String>? = nil
         var completedQuizzes: [[(String, String)]] = []
         
-        var answerCompletion: (String) -> Void = { _ in }
         
         func handle(result: Result<String, String>) {
             handledResult = result
@@ -106,7 +128,7 @@ class FlowTest: XCTestCase {
         
         func answer(for question: String, completion: @escaping (String) -> Void) {
             questionsAsked.append(question)
-            self.answerCompletion = completion
+            answersCompletion.append(completion)
         }
     }
 }
