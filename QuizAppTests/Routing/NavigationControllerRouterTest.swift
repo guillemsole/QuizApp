@@ -4,8 +4,8 @@
 
 import UIKit
 import XCTest
+import QuizEngine
 @testable import QuizApp
-@testable import QuizEngine
 
 class NavigationControllerRouterTest: XCTestCase {
     let multipleAnswerQuestion = Question.multipleAnswer("Q1")
@@ -102,10 +102,10 @@ class NavigationControllerRouterTest: XCTestCase {
     
     func test_routeToResult_showsResultController() {
         let viewController = UIViewController()
-        let result = Result(answers: [singleAnswerQuestion: ["A1"]], score: 10)
+        let result = Result.make(answers: [singleAnswerQuestion: ["A1"]], score: 10)
         
         let secondViewController = UIViewController()
-        let secondResult = Result(answers: [Question.singleAnswer("Q2"): ["A1"]], score: 20)
+        let secondResult = Result.make(answers: [Question.singleAnswer("Q2"): ["A1"]], score: 20)
         
         factory.stub(result: result, with: viewController)
         factory.stub(result: secondResult, with: secondViewController)
@@ -147,17 +147,6 @@ class NavigationControllerRouterTest: XCTestCase {
         func resultViewController(for result: Result<Question<String>, [String]>) -> UIViewController {
             return stubbedResults[result] ?? UIViewController()
         }
-    }
-}
-
-extension Result: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(score)
-    }
-    
-    public static func == (lhs: Result<Question, Answer>, rhs: Result<Question, Answer>) -> Bool {
-        return lhs.score == rhs.score
     }
 }
 

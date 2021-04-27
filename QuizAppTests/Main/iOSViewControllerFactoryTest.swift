@@ -4,8 +4,8 @@
 
 import UIKit
 import XCTest
+import QuizEngine
 @testable import QuizApp
-@testable import QuizEngine
 
 class iOSViewControllerFactoryTest: XCTestCase {
     let singleAnswerQuestion = Question.singleAnswer("Q1")
@@ -74,7 +74,7 @@ class iOSViewControllerFactoryTest: XCTestCase {
         let correctAnswers = [singleAnswerQuestion: ["A1"], multipleAnswerQuestion: ["A1", "A2"]]
         let questions = [singleAnswerQuestion, multipleAnswerQuestion]
         
-        let result = Result(answers: userAnswers, score: 2)
+        let result = Result.make(answers: userAnswers, score: 2)
 
         let presenter = ResultsPresenter(result: result, questions: questions, correctAnswers: correctAnswers)
         let sut = makeSUT(correctAnswers: correctAnswers)
