@@ -10,6 +10,7 @@ class Flow <Delegate: QuizDelegate> {
     
     private let delegate: Delegate // Type we are gonna communicate depending on the communication platform that we are running. It's a contract.
     private let questions: [Question]
+    private var newAnswers: [(Question, Answer)] = []
     private var answers: [Question: Answer] = [:]
     private var scoring: ([Question: Answer]) -> Int
     
@@ -29,7 +30,7 @@ class Flow <Delegate: QuizDelegate> {
             delegate.answer(for: question, completion: answer(for: question, at: index))
         } else {
             delegate.handle(result: result())
-            delegate.didCompleteQuiz(withAnswers: [])
+            delegate.didCompleteQuiz(withAnswers: newAnswers)
         }
     }
     
@@ -40,6 +41,7 @@ class Flow <Delegate: QuizDelegate> {
 
     private func answer(for question: Question, at index: Int) -> (Answer) -> Void {
         return { [weak self] answer in
+            self?.newAnswers.append((question, answer))
             self?.answers[question] = answer
             self?.delegateQuestionHandling(after: index)
         }
