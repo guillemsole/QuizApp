@@ -45,9 +45,6 @@ class QuizTest: XCTestCase {
         
         var answersCompletion: [(String) -> Void] = []
         
-        func handle(result: Result<String, String>) {
-        }
-        
         func didCompleteQuiz(withAnswers answers: [(question: String, answer: String)]) {
             completedQuizzes.append(answers)
         }
