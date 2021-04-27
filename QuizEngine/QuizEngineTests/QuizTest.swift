@@ -9,49 +9,49 @@ import QuizEngine // We don't make it teastable it means we are testing the publ
 @available(*, deprecated)
 class QuizTest: XCTestCase {
     
-    private let router = RouterSpy()
-    private var game: Game<String, String, RouterSpy>!
+    private let delegate = DelegateSpy()
+    private var quiz: Quiz!
     
     override func setUp() {
         super.setUp()
-        game = startGame(questions: ["Q1","Q2"], router: router, correctAnswers: ["Q1": "A1", "Q2": "A2"])
+        quiz = startQuiz(questions: ["Q1","Q2"], router: delegate, correctAnswers: ["Q1": "A1", "Q2": "A2"])
 
     }
-    func test_startGame_answerZeroOutOfTwoCorrectly_scoresZero() {
-        router.answerCallback("wrong")
-        router.answerCallback("wrong")
+    func test_startQuiz_answerZeroOutOfTwoCorrectly_scoresZero() {
+        delegate.answerCallback("wrong")
+        delegate.answerCallback("wrong")
         
-        XCTAssertEqual(router.routedResult!.score, 0)
+        XCTAssertEqual(delegate.handledResult!.score, 0)
     }
     
-    func test_startGame_answerOneOutOfTwoCorrectly_scoresOne() {
-        router.answerCallback("A1")
-        router.answerCallback("wrong")
+    func test_startQuiz_answerOneOutOfTwoCorrectly_scoresOne() {
+        delegate.answerCallback("A1")
+        delegate.answerCallback("wrong")
         
-        XCTAssertEqual(router.routedResult!.score, 1)
+        XCTAssertEqual(delegate.handledResult!.score, 1)
     }
     
     
-    func test_startGame_answerTwoOutOfTwoCorrectly_scoresTwo() {
-        router.answerCallback("A1")
-        router.answerCallback("A2")
+    func test_startQuiz_answerTwoOutOfTwoCorrectly_scoresTwo() {
+        delegate.answerCallback("A1")
+        delegate.answerCallback("A2")
         
-        XCTAssertEqual(router.routedResult!.score, 2)
+        XCTAssertEqual(delegate.handledResult!.score, 2)
     }
     
-    class RouterSpy: Router {
-        var routedResult: Result<String, String>? = nil
-        var routedQuestions: [String] = []
+    private class DelegateSpy: Router {
+        var handledResult: Result<String, String>? = nil
+        var handledQuestions: [String] = []
         
         var answerCallback: (String) -> Void = { _ in }
         
         func routeTo(question: String, answerCallback: @escaping (String) -> Void) {
-            routedQuestions.append(question)
+            handledQuestions.append(question)
             self.answerCallback = answerCallback
         }
         
         func routeTo(result: Result<String, String>) {
-            routedResult = result
+            handledResult = result
         }
     }
 }

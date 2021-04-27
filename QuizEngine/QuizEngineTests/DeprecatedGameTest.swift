@@ -39,7 +39,7 @@ class DeprecatedGameTest: XCTestCase {
         XCTAssertEqual(router.routedResult!.score, 2)
     }
     
-    class RouterSpy: Router {
+    private class RouterSpy: Router {
         var routedResult: Result<String, String>? = nil
         var routedQuestions: [String] = []
         
