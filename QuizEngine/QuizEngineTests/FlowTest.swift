@@ -55,19 +55,13 @@ class FlowTest: XCTestCase {
         XCTAssertEqual(delegate.handledQuestions, ["Q1", "Q2", "Q3"])
     }
     
-    func test_startAndAnswerFirstQuestion_withOneQuestions_doneNotDelegateAnotherQuestion() {
+    func test_startAndAnswerFirstQuestion_withOneQuestions_doneNotCompleteQuiz() {
         let sut = makeSUT(questions: ["Q1"])
         sut.start()
         
         delegate.answerCompletion("A1")
 
         XCTAssertEqual(delegate.handledQuestions, ["Q1"])
-    }
-    
-    func test_start_withNoQuestions_delegatesResultHandling() {
-        makeSUT(questions: []).start()
-        
-        XCTAssertEqual(delegate.handledResult!.answers, [:])
     }
     
     func test_startAndAnswerFirstQuestionAndSecond_withTwoQuestions_delegatesResultHandling() {
