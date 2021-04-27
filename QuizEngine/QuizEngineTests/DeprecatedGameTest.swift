@@ -9,8 +9,8 @@ import QuizEngine // We don't make it teastable it means we are testing the publ
 @available(*, deprecated)
 class DeprecatedGameTest: XCTestCase {
     
-    let router = RouterSpy()
-    var game: Game<String, String, RouterSpy>!
+    private let router = RouterSpy()
+    private var game: Game<String, String, RouterSpy>!
     
     override func setUp() {
         super.setUp()
@@ -38,21 +38,20 @@ class DeprecatedGameTest: XCTestCase {
         
         XCTAssertEqual(router.routedResult!.score, 2)
     }
-}
-
-class RouterSpy: Router {
-    var routedQuestions: [String] = []
-    var routedResult: Result<String, String>? = nil
     
-    var answerCallback: (String) -> Void = { _ in }
-    
-    func routeTo(question: String, answerCallback: @escaping (String) -> Void) {
-        routedQuestions.append(question)
-        self.answerCallback = answerCallback
+    class RouterSpy: Router {
+        var routedResult: Result<String, String>? = nil
+        var routedQuestions: [String] = []
+        
+        var answerCallback: (String) -> Void = { _ in }
+        
+        func routeTo(question: String, answerCallback: @escaping (String) -> Void) {
+            routedQuestions.append(question)
+            self.answerCallback = answerCallback
+        }
+        
+        func routeTo(result: Result<String, String>) {
+            routedResult = result
+        }
     }
-    
-    func routeTo(result: Result<String, String>) {
-        routedResult = result
-    }
 }
-

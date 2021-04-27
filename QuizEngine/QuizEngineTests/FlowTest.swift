@@ -113,4 +113,29 @@ class FlowTest: XCTestCase {
     func makeSUT(questions: [String], scoring: @escaping ([String: String]) -> Int = { _ in return 0 }) -> Flow<DelegateSpy> {
         return Flow(questions: questions, delegate: delegate, scoring: scoring)
     }
+    
+    class DelegateSpy: Router, QuizDelegate {
+        var handledResult: Result<String, String>? = nil
+
+        var handledQuestions: [String] = []
+        
+        var answerCallback: (String) -> Void = { _ in }
+        
+        func handle(result: Result<String, String>) {
+            handledResult = result
+        }
+        
+        func handle(question: String, answerCallback: @escaping (String) -> Void) {
+            handledQuestions.append(question)
+            self.answerCallback = answerCallback
+        }
+        
+        func routeTo(question: String, answerCallback: @escaping (String) -> Void) {
+            handle(question: question, answerCallback: answerCallback)
+        }
+        
+        func routeTo(result: Result<String, String>) {
+            handle(result: result)
+        }
+    }
 }
