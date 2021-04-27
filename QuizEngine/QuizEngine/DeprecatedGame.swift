@@ -28,20 +28,34 @@ public class Game<Question, Answer, R: Router> {
 
 @available(*, deprecated)
 public func startGame<Question, Answer: Equatable, R: Router>(questions: [Question], router: R, correctAnswers: [Question: Answer]) -> Game<Question, Answer, R> where R.Question == Question, R.Answer == Answer {
-    let flow = Flow(questions: questions, delegate: QuizDelegateToRouterAdapter(router), scoring: { scoring($0, correctAnswer: correctAnswers) })
+    let flow = Flow(questions: questions, delegate: QuizDelegateToRouterAdapter(router, correctAnswers), scoring: { scoring($0, correctAnswer: correctAnswers) })
     flow.start()
     return  Game(flow: flow)
 }
 
 @available(*, deprecated)
-private class QuizDelegateToRouterAdapter<R: Router>: QuizDelegate {
+private class QuizDelegateToRouterAdapter<R: Router>: QuizDelegate where R.Answer: Equatable {
     private let router: R
+    private let correctAnswers: [R.Question: R.Answer]
 
-    init(_ router: R) {
+    init(_ router: R, _ correctAnswers: [R.Question: R.Answer]) {
         self.router = router
+        self.correctAnswers = correctAnswers
     }
     
     func handle(result: Result<R.Question, R.Answer>) {
+        router.routeTo(result: result)
+    }
+    
+    func didCompleteQuiz(withAnswers answers: [(question: R.Question, answer: R.Answer)]) {
+        let answersDictionary = answers.reduce([R.Question: R.Answer]()) { acc, tuple in
+            var acc = acc
+            acc[tuple.question] = tuple.answer
+            return acc
+        }
+        
+        let score = scoring(answersDictionary, correctAnswer: correctAnswers)
+        let result = Result(answers: answersDictionary, score: score)
         router.routeTo(result: result)
     }
     
