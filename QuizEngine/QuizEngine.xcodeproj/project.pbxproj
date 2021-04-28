@@ -20,13 +20,11 @@
 		63DC081B2638631000994F55 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC081A2638631000994F55 /* Quiz.swift */; };
 		63DC081D2638871D00994F55 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC081C2638871D00994F55 /* Assertions.swift */; };
 		63DC081F2638877100994F55 /* DelegateSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC081E2638877100994F55 /* DelegateSpy.swift */; };
-		63DC0821263938D200994F55 /* ScoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC0820263938D100994F55 /* ScoreTest.swift */; };
 		63DC082226393D8B00994F55 /* QuizDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F3C4DD263837E200BC579C /* QuizDelegate.swift */; };
 		63DC082326393D8F00994F55 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC081A2638631000994F55 /* Quiz.swift */; };
 		63DC082426393E0E00994F55 /* QuizTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F3C4EF26383A9100BC579C /* QuizTest.swift */; };
 		63DC082526393E1100994F55 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC081C2638871D00994F55 /* Assertions.swift */; };
 		63DC082626393E1400994F55 /* DelegateSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC081E2638877100994F55 /* DelegateSpy.swift */; };
-		63DC082726393E1700994F55 /* ScoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC0820263938D100994F55 /* ScoreTest.swift */; };
 		63DC08292639429100994F55 /* DataSourceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC08282639429100994F55 /* DataSourceSpy.swift */; };
 		63DC082A263942A300994F55 /* DataSourceSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC08282639429100994F55 /* DataSourceSpy.swift */; };
 		63DC082C2639437A00994F55 /* QuizDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC082B2639437A00994F55 /* QuizDataSource.swift */; };
@@ -68,7 +66,6 @@
 		63DC081A2638631000994F55 /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
 		63DC081C2638871D00994F55 /* Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
 		63DC081E2638877100994F55 /* DelegateSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateSpy.swift; sourceTree = "<group>"; };
-		63DC0820263938D100994F55 /* ScoreTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTest.swift; sourceTree = "<group>"; };
 		63DC08282639429100994F55 /* DataSourceSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceSpy.swift; sourceTree = "<group>"; };
 		63DC082B2639437A00994F55 /* QuizDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDataSource.swift; sourceTree = "<group>"; };
 		63E497FF26371B28006A3765 /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
@@ -153,7 +150,6 @@
 				63F3C4EF26383A9100BC579C /* QuizTest.swift */,
 				63DC081C2638871D00994F55 /* Assertions.swift */,
 				63DC081E2638877100994F55 /* DelegateSpy.swift */,
-				63DC0820263938D100994F55 /* ScoreTest.swift */,
 				63DC08282639429100994F55 /* DataSourceSpy.swift */,
 			);
 			path = QuizEngineTests;
@@ -348,7 +344,6 @@
 			files = (
 				63DA884426151C9600E4D806 /* FlowTest.swift in Sources */,
 				63DA88D6261775BE00E4D806 /* DeprecatedGameTest.swift in Sources */,
-				63DC0821263938D200994F55 /* ScoreTest.swift in Sources */,
 				63DC08292639429100994F55 /* DataSourceSpy.swift in Sources */,
 				63DC081D2638871D00994F55 /* Assertions.swift in Sources */,
 				63F3C4F026383A9100BC579C /* QuizTest.swift in Sources */,
@@ -373,7 +368,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63DC082726393E1700994F55 /* ScoreTest.swift in Sources */,
 				63DA890D2617812400E4D806 /* DeprecatedGameTest.swift in Sources */,
 				63DA890E2617812400E4D806 /* FlowTest.swift in Sources */,
 				63DC082A263942A300994F55 /* DataSourceSpy.swift in Sources */,
