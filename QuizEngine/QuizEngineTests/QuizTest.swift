@@ -22,16 +22,6 @@ class QuizTest: XCTestCase {
         assertEqual(delegate.completedQuizzes[0], [("Q1", "A1"), ("Q2", "A2")])
     }
     
-    final class DataSourceSpy: QuizDataSource {
-        var answerCompletions: [(String) -> Void] = []
-        var questionsAsked: [String] = []
-        
-        func answer(for question: String, completion: @escaping (String) -> Void) {
-            questionsAsked.append(question)
-            answerCompletions.append(completion)
-        }
-    }
-    
     func test_startQuiz_answerAllQuestions_completesWithNewAnswers() {
         let delegate = DelegateSpy()
         let dataSource = DataSourceSpy()
