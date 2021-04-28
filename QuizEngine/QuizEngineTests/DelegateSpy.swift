@@ -14,7 +14,7 @@ class DelegateSpy: QuizDelegate {
     
     var answerCompletions: [(String) -> Void] = []
     
-    func didCompleteQuiz(withAnswers answers: [(question: String, answers: String)]) {
+    func didCompleteQuiz(withAnswers answers: [(question: String, answer: String)]) {
         completedQuizzes.append(answers)
     }
 }
