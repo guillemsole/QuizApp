@@ -5,21 +5,21 @@
 import UIKit
 import QuizEngine
 
-class iOSViewControllerFactory: ViewControllerFactory {
-    private let questions: [Question<String>]
+final class iOSViewControllerFactory: ViewControllerFactory {
+    
+    typealias Answers = [(question: Question<String>, answer: [String])]
     private let options: [Question<String>: [String]]
-    private let correctAnswers: [Question<String>: [String]]
+    private let correctAnswers: Answers
 
-    init(
-        questions: [Question<String>],
-        options: [Question<String>: [String]],
-        correctAnswers: [Question<String>: [String]]
-    ) {
-        self.questions = questions
+    private var questions: [Question<String>] {
+        return correctAnswers.map { $0.question }
+    }
+
+    init(options: [Question<String>: [String]], correctAnswers: Answers) {
         self.options = options
         self.correctAnswers = correctAnswers
     }
-
+    
     func questionViewController(for question: Question<String>, answerCallback: @escaping ([String]) -> Void) -> UIViewController {
         guard let options = options[question] else {
             fatalError("Couldn't find options for question: \(question)")
@@ -45,9 +45,12 @@ class iOSViewControllerFactory: ViewControllerFactory {
         return controller
     }
     
-    func resultViewController(for result: Result<Question<String>, [String]>) -> UIViewController {
-        let presenter = ResultsPresenter(result: result, questions: questions, correctAnswers: correctAnswers)
+    func resultViewController(for answers: Answers) -> UIViewController {
+        let presenter = ResultsPresenter(
+            userAnswers: answers,
+            correctAnswers: correctAnswers,
+            scorer: BasicScore.score
+        )
         return ResultViewController(summary: presenter.summary, answers: presenter.presentableAnswers)
     }
-
 }

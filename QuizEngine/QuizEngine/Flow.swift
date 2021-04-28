@@ -4,45 +4,52 @@
 
 import Foundation
 
-class Flow <Question, Answer, R: Router> where R.Question == Question, R.Answer == Answer {
-    private let router: R // Type we are gonna communicate depending on the communication platform that we are running. It's a contract.
-    private let questions: [Question]
-    private var answers: [Question: Answer] = [:]
-    private var scoring: ([Question: Answer]) -> Int
+final class Flow <Delegate: QuizDelegate, DataSource: QuizDataSource> where Delegate.Question == DataSource.Question, Delegate.Answer == DataSource.Answer {
+    typealias Question = Delegate.Question
+    typealias Answer = Delegate.Answer
     
-    init(questions: [Question], router: R, scoring: @escaping ([Question: Answer]) -> Int) {
+    private let delegate: Delegate // Type we are gonna communicate depending on the communication platform that we are running. It's a contract.
+    private let dataSource: DataSource
+    private let questions: [Question]
+    private var answers: [(Question, Answer)] = []
+    
+    init(questions: [Question], delegate: Delegate, dataSource: DataSource) {
         self.questions = questions
-        self.router = router
-        self.scoring = scoring
+        self.delegate = delegate
+        self.dataSource = dataSource
     }
     
     func start() {
-        if let firstQuestion = questions.first {
-            router.routeTo(question: firstQuestion, answerCallback: nextCallback(from: firstQuestion))
+        delegateQuestionHandling(at: questions.startIndex)
+    }
+    
+    private func delegateQuestionHandling(at index: Int) {
+        if index < questions.endIndex {
+            let question = questions[index]
+//            delegate.answer(for: question, completion: answer(for: question, at: index))
+            dataSource.answer(for: question, completion: answer(for: question, at: index))
         } else {
-            router.routeTo(result: result())
+            delegate.didCompleteQuiz(withAnswers: answers)
         }
     }
     
-    private func nextCallback(from question: Question) -> (Answer) -> Void {
-        return { [weak self] in self?.routeNext(question, $0) }
+    private func delegateQuestionHandling(after index: Int) {
+        delegateQuestionHandling(at: questions.index(after: index))
     }
-    
-    private func routeNext(_ question: Question, _ answer: Answer) {
-        if let currentQuestionIndex = questions.firstIndex(of: question) {
-            answers[question] = answer
-            
-            let nextQuestionIndex = currentQuestionIndex+1
-            if nextQuestionIndex < questions.count {
-                let nextQuestion = questions[nextQuestionIndex]
-                router.routeTo(question: nextQuestion, answerCallback: nextCallback(from: questions[nextQuestionIndex]))
-            } else {
-                router.routeTo(result: result())
-            }
+
+    private func answer(for question: Question, at index: Int) -> (Answer) -> Void {
+        return { [weak self] answer in
+            self?.answers.replaceOrInsert((question, answer), at: index)
+            self?.delegateQuestionHandling(after: index)
         }
     }
-    
-    private func result() -> Result<Question, Answer> {
-        Result(answers: answers, score: scoring(answers))
+}
+
+private extension Array {
+    mutating func replaceOrInsert(_ element: Element, at index: Index) {
+        if index < count {
+            remove(at: index)
+        }
+        insert(element, at: index)
     }
 }

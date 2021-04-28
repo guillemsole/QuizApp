@@ -61,27 +61,31 @@ class iOSViewControllerFactoryTest: XCTestCase {
     
     // MARK: - Helpers
     
-    func makeSUT(options: [Question<String>: [String]] = [:], correctAnswers: [Question<String>: [String]] = [:]) -> iOSViewControllerFactory {
-        return iOSViewControllerFactory(questions: [singleAnswerQuestion, multipleAnswerQuestion], options: options, correctAnswers: correctAnswers)
+    func makeSUT(options: [Question<String>: [String]] = [:], correctAnswers: [(Question<String>, [String])] = []) -> iOSViewControllerFactory {
+        return iOSViewControllerFactory(options: options, correctAnswers: correctAnswers)
     }
     
     func makeQuestionController(question: Question<String> = Question.singleAnswer("")) -> QuestionViewController {
-        return makeSUT(options: [question: options]).questionViewController(for: question, answerCallback: { _ in }) as! QuestionViewController
+        let sut = makeSUT(
+            options: [question: options],
+            correctAnswers: [(singleAnswerQuestion, []), (multipleAnswerQuestion, [])])
+        
+        return sut.questionViewController(for: question, answerCallback: { _ in }) as! QuestionViewController
     }
     
     func makeResultsController() -> (controller: ResultViewController, presenter: ResultsPresenter) {
-        let userAnswers = [singleAnswerQuestion: ["A1"], multipleAnswerQuestion: ["A1", "A2"]]
-        let correctAnswers = [singleAnswerQuestion: ["A1"], multipleAnswerQuestion: ["A1", "A2"]]
-        let questions = [singleAnswerQuestion, multipleAnswerQuestion]
+        let userAnswers = [(singleAnswerQuestion, ["A1"]), (multipleAnswerQuestion, ["A1", "A2"])]
+        let correctAnswers = [(singleAnswerQuestion, ["A1"]), (multipleAnswerQuestion, ["A1", "A2"])]
         
-        let result = Result.make(answers: userAnswers, score: 2)
-
-        let presenter = ResultsPresenter(result: result, questions: questions, correctAnswers: correctAnswers)
+        let presenter = ResultsPresenter(
+            userAnswers: userAnswers,
+            correctAnswers: correctAnswers,
+            scorer: BasicScore.score
+        )
         let sut = makeSUT(correctAnswers: correctAnswers)
         
-        let controller = sut.resultViewController(for: result) as! ResultViewController
+        let controller = sut.resultViewController(for: userAnswers) as! ResultViewController
 
         return (controller: controller, presenter: presenter)
     }
 }
-
