@@ -8,5 +8,5 @@ public protocol QuizDelegate {
     associatedtype Question
     associatedtype Answer
 
-    public func didCompleteQuiz(withAnswers: [(question: Question, answer: Answer)])
+    func didCompleteQuiz(withAnswers: [(question: Question, answer: Answer)])
 }
