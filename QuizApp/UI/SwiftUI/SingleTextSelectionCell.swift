@@ -28,5 +28,6 @@ struct SingleTextSelectionCell: View {
 struct SingleTextSelectionCell_Previews: PreviewProvider {
     static var previews: some View {
         SingleTextSelectionCell(text: "A text", selection: {})
+            .previewLayout(.sizeThatFits)
     }
 }
