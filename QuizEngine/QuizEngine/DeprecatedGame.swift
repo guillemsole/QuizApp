@@ -60,11 +60,6 @@ private class QuizDelegateToRouterAdapter<R: Router>: QuizDelegate where R.Answe
         router.routeTo(result: result)
     }
     
-    #warning("Remove when deleted from delegate")
-    func answer(for question: R.Question, completion: @escaping (R.Answer) -> Void) {
-        router.routeTo(question: question, answerCallback: completion)
-    }
-    
     private func scoring(_ answers: [R.Question: R.Answer], correctAnswer: [R.Question: R.Answer]) -> Int {
         return answers.reduce(0) { (score, tuple) in
             return score + (correctAnswer[tuple.key] == tuple.value ? 1 : 0)
