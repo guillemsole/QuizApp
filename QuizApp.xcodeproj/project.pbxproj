@@ -13,6 +13,7 @@
 		631AF3F426191553006F32FC /* QuestionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631AF3F326191553006F32FC /* QuestionPresenter.swift */; };
 		631AF3F7261AF99A006F32FC /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631AF3F6261AF99A006F32FC /* ViewControllerFactory.swift */; };
 		63688C4B2639922D00964580 /* SingleAnswerQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63688C4A2639922D00964580 /* SingleAnswerQuestion.swift */; };
+		63688C4D263996DA00964580 /* QuestionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63688C4C263996DA00964580 /* QuestionHeader.swift */; };
 		63DA8858261617DF00E4D806 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA8857261617DF00E4D806 /* AppDelegate.swift */; };
 		63DA885A261617DF00E4D806 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DA8859261617DF00E4D806 /* SceneDelegate.swift */; };
 		63DA8861261617E500E4D806 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63DA8860261617E500E4D806 /* Assets.xcassets */; };
@@ -71,6 +72,7 @@
 		631AF3F326191553006F32FC /* QuestionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionPresenter.swift; sourceTree = "<group>"; };
 		631AF3F6261AF99A006F32FC /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		63688C4A2639922D00964580 /* SingleAnswerQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleAnswerQuestion.swift; sourceTree = "<group>"; };
+		63688C4C263996DA00964580 /* QuestionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionHeader.swift; sourceTree = "<group>"; };
 		63DA8854261617DF00E4D806 /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DA8857261617DF00E4D806 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63DA8859261617DF00E4D806 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				63688C4A2639922D00964580 /* SingleAnswerQuestion.swift */,
+				63688C4C263996DA00964580 /* QuestionHeader.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63688C4D263996DA00964580 /* QuestionHeader.swift in Sources */,
 				63DA8858261617DF00E4D806 /* AppDelegate.swift in Sources */,
 				63DC08332639452100994F55 /* BasicScore.swift in Sources */,
 				631AF3F7261AF99A006F32FC /* ViewControllerFactory.swift in Sources */,
