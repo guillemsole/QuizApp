@@ -11,6 +11,11 @@ class ResultsPResenterTest: XCTestCase {
     let singleAnswerQuestion = Question.singleAnswer("Q1")
     let multipleAnswerQuestion = Question.multipleAnswer("Q2")
     
+    
+    func test_title_returnsFormattedTitle() {
+        XCTAssertEqual(makeSUT().title, "Result")
+    }
+
     func test_summary_withTwoQuestionsAndScoreOne_returnsSummary() {
         let answers = [singleAnswerQuestion: ["A1"], multipleAnswerQuestion: ["A2", "A3"]]
         let orderedQuestions = [singleAnswerQuestion, multipleAnswerQuestion]
@@ -68,5 +73,11 @@ class ResultsPResenterTest: XCTestCase {
         XCTAssertEqual(sut.presentableAnswers.last!.question, "Q2")
         XCTAssertEqual(sut.presentableAnswers.last!.answer, "A1, A4")
         XCTAssertNil(sut.presentableAnswers.first!.wrongAnswer)
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeSUT(userAnswers: [(question: Question<String>, answers: [String])] = [], correctAnswers: [(question: Question<String>, answers: [String])] = [], scorer: @escaping ([[String]], [[String]]) -> Int = { _, _ in 0 }) -> ResultsPresenter {
+        return ResultsPresenter(userAnswers: userAnswers, correctAnswers: correctAnswers, scorer: scorer)
     }
 }

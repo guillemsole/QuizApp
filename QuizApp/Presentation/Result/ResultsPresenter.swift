@@ -16,6 +16,12 @@ final class ResultsPresenter {
     private let correctAnswers: Answers
     private let scorer: Scorer
     
+    init(userAnswers: Answers, correctAnswers: Answers, scorer: @escaping Scorer) {
+        self.userAnswers = userAnswers
+        self.correctAnswers = correctAnswers
+        self.scorer = scorer
+    }
+    
     init(result: Result<Question<String>, [String]>, questions: [Question<String>], correctAnswers: [Question<String>: [String]]) {
         self.userAnswers = questions.map { question in
             (question, result.answers[question]!)
@@ -27,6 +33,10 @@ final class ResultsPresenter {
     }
     var summary: String {
         return "You got \(score)/\(userAnswers.count) correct"
+    }
+    
+    var title: String {
+        return "Result"
     }
     
     private var score: Int {
