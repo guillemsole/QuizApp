@@ -148,10 +148,6 @@ class NavigationControllerRouterTest: XCTestCase {
         func resultViewController(for answers: Answers) -> UIViewController {
             return stubbedResults[answers.map { $0.question }] ?? UIViewController()
         }
-        
-        func resultViewController(for result: Result<Question<String>, [String]>) -> UIViewController {
-            return UIViewController()
-        }
     }
 }
 
