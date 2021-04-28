@@ -48,10 +48,10 @@ private class QuizDelegateToRouterAdapter<R: Router>: QuizDelegate where R.Answe
         self.correctAnswers = correctAnswers
     }
     
-    func didCompleteQuiz(withAnswers answers: [(question: R.Question, answer: R.Answer)]) {
+    func didCompleteQuiz(withAnswers answers: [(question: R.Question, answers: R.Answer)]) {
         let answersDictionary = answers.reduce([R.Question: R.Answer]()) { acc, tuple in
             var acc = acc
-            acc[tuple.question] = tuple.answer
+            acc[tuple.question] = tuple.answers
             return acc
         }
         
