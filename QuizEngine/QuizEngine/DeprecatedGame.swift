@@ -33,7 +33,7 @@ public class Game<Question, Answer, R: Router> {
 
 @available(*, deprecated, message: "use Quiz.start instead")
 public func startGame<Question, Answer: Equatable, R: Router>(questions: [Question], router: R, correctAnswers: [Question: Answer]) -> Game<Question, Answer, R> where R.Question == Question, R.Answer == Answer {
-    let flow = Flow(questions: questions, delegate: QuizDelegateToRouterAdapter(router, correctAnswers))
+    let flow = Flow(questions: questions, delegate: QuizDelegateToRouterAdapter(router, correctAnswers), dataSource: QuizDataSourceToRouterAdapter(router))
     flow.start()
     return  Game(flow: flow)
 }
@@ -60,6 +60,7 @@ private class QuizDelegateToRouterAdapter<R: Router>: QuizDelegate where R.Answe
         router.routeTo(result: result)
     }
     
+    #warning("Remove when deleted from delegate")
     func answer(for question: R.Question, completion: @escaping (R.Answer) -> Void) {
         router.routeTo(question: question, answerCallback: completion)
     }
@@ -70,5 +71,20 @@ private class QuizDelegateToRouterAdapter<R: Router>: QuizDelegate where R.Answe
         }
     }
 }
+
+@available(*, deprecated, message: "remove along with the deprecated Game types")
+private class QuizDataSourceToRouterAdapter<R: Router>: QuizDataSource where R.Answer: Equatable {
+    private let router: R
+
+    init(_ router: R) {
+        self.router = router
+    }
+    
+    func answer(for question: R.Question, completion: @escaping (R.Answer) -> Void) {
+        router.routeTo(question: question, answerCallback: completion)
+    }
+}
+
+
 
 
