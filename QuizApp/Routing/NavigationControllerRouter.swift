@@ -7,7 +7,6 @@ import QuizEngine
 
 class NavigationControllerRouter: Router, QuizDataSource, QuizDelegate {
 
-    
     private let navigationController: UINavigationController
     private let factory: ViewControllerFactory
     
@@ -35,8 +34,8 @@ class NavigationControllerRouter: Router, QuizDataSource, QuizDelegate {
         answer(for: question, completion: answerCallback)
     }
     
-    func didCompleteQuiz(withAnswers answers: [(question: Question<String>, answers: [String])]) {
-        show(factory.resultViewController(for: answers))
+    func didCompleteQuiz(withAnswers answers: [(question: Question<String>, answer: [String])]) {
+        show(factory.resultViewController(for: answers.map { $0 }))
     }
     
     func routeTo(result: Result<Question<String>, [String]>) {
