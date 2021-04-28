@@ -8,14 +8,6 @@ import QuizEngine
 @testable import QuizApp
 
 class NavigationControllerRouterTest: XCTestCase {
-    let multipleAnswerQuestion = Question.multipleAnswer("Q1")
-    let singleAnswerQuestion = Question.singleAnswer("Q1")
-
-    let navigationController = NonAnimatedNavigationController()
-    let factory = ViewControllerFactoryStub()
-    lazy var sut = {
-        NavigationControllerRouter(navigationController, factory: factory)
-    }()
 
     func test_answerForQuestion_showQuestionController() {
         let viewController = UIViewController()
@@ -100,7 +92,7 @@ class NavigationControllerRouterTest: XCTestCase {
         XCTAssertTrue(callbackWasFired)
     }
     
-    func test_routeToResult_showsResultController() {
+    func test_didCompleteQuiz_showsResultController() {
         let viewController = UIViewController()
         let userAnswers = [(singleAnswerQuestion, ["A1"])]
         
@@ -120,13 +112,22 @@ class NavigationControllerRouterTest: XCTestCase {
     
     // MARK: - Helpers
     
-    class NonAnimatedNavigationController: UINavigationController {
+    private let multipleAnswerQuestion = Question.multipleAnswer("Q1")
+    private let singleAnswerQuestion = Question.singleAnswer("Q1")
+
+    private let navigationController = NonAnimatedNavigationController()
+    private let factory = ViewControllerFactoryStub()
+    private lazy var sut = {
+        NavigationControllerRouter(navigationController, factory: factory)
+    }()
+    
+    private class NonAnimatedNavigationController: UINavigationController {
         override func pushViewController(_ viewController: UIViewController, animated: Bool) {
             super.pushViewController(viewController, animated: false)
         }
     }
 
-    class ViewControllerFactoryStub: ViewControllerFactory {
+    private class ViewControllerFactoryStub: ViewControllerFactory {
         private var stubbedQuestions = [Question<String>: UIViewController]()
         private var stubbedResults = Dictionary<[Question<String>], UIViewController>()
         var answerCallback = [Question<String>: ([String]) -> Void]()
