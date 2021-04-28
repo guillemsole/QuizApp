@@ -70,22 +70,21 @@ class iOSViewControllerFactoryTest: XCTestCase {
     }
     
     func makeQuestionController(question: Question<String> = Question.singleAnswer("")) -> QuestionViewController {
-        return makeSUT(options: [question: options], correctAnswers: []).questionViewController(for: question, answerCallback: { _ in }) as! QuestionViewController
+        return makeSUT(options: [question: options], correctAnswers: [:]).questionViewController(for: question, answerCallback: { _ in }) as! QuestionViewController
     }
     
     func makeResultsController() -> (controller: ResultViewController, presenter: ResultsPresenter) {
         let userAnswers = [(singleAnswerQuestion, ["A1"]), (multipleAnswerQuestion, ["A1", "A2"])]
         let correctAnswers = [(singleAnswerQuestion, ["A1"]), (multipleAnswerQuestion, ["A1", "A2"])]
         
-        let result = Result.make(answers: [singleAnswerQuestion: ["A1"], multipleAnswerQuestion: ["A1", "A2"]], score: 2)
         let presenter = ResultsPresenter(
             userAnswers: userAnswers,
             correctAnswers: correctAnswers,
-            scorer: { _, _ in 2}
+            scorer: BasicScore.score
         )
         let sut = makeSUT(correctAnswers: correctAnswers)
         
-        let controller = sut.resultViewController(for: result) as! ResultViewController
+        let controller = sut.resultViewController(for: userAnswers) as! ResultViewController
 
         return (controller: controller, presenter: presenter)
     }
