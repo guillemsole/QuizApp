@@ -12,12 +12,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var quiz: Quiz?
+    private lazy var navigationController = UINavigationController()
 
+
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         guard let scene = (scene as? UIWindowScene) else { return }
         
+        window = UIWindow(windowScene: scene)
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
         
+        startNewQuiz()
+    }
+    
+    private func startNewQuiz() {
         let question1 = Question.singleAnswer("What is the longest that an elephant has ever lived?")
         let question2 = Question.multipleAnswer("Test multiple answer question")
         let questions = [question1, question2]
@@ -35,13 +45,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let options = [question1: options1, question2: options2]
         let correctAnswers = [(question1, [option3]), (question2, [option4, option6])]
         
-        let navigationController = UINavigationController()
-        let factory = iOSViewControllerFactory(options: options, correctAnswers: correctAnswers)
+        let factory = iOSSwiftUIViewControllerFactory(options: options, correctAnswers: correctAnswers, playAgain: startNewQuiz)
         let delegate = NavigationControllerRouter(navigationController, factory: factory)
-
-        window = UIWindow(windowScene: scene)
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
         
         quiz = Quiz.start(questions: questions, delegate: delegate, dataSource: delegate)
     }
