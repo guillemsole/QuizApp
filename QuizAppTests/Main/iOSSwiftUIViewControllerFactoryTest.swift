@@ -63,16 +63,22 @@ class iOSSwiftUIViewControllerFactoryTest: XCTestCase {
         XCTAssertEqual(view.store.options.map(\.text), options[multipleAnswerQuestion])
     }
     
-    func test_resultsViewController_createsViewControllerWithSummary() {
-        let results = makeResultsController()
-        
-        XCTAssertEqual(results.controller.summary, results.presenter.summary)
+    func test_resultsViewController_createsViewControllerWithTitle() throws {
+        let (view, presenter) = try XCTUnwrap(makeResults())
+
+        XCTAssertEqual(view.title, presenter.title)
     }
     
-    func test_resultsViewController_createsViewControllerWithPresentableAnswers() {
-        let results = makeResultsController()
+    func test_resultsViewController_createsViewControllerWithSummary() throws {
+        let (view, presenter) = try XCTUnwrap(makeResults())
 
-        XCTAssertEqual(results.controller.answers.count, results.presenter.presentableAnswers.count)
+        XCTAssertEqual(view.summary, presenter.summary)
+    }
+    
+    func test_resultsViewController_createsViewControllerWithPresentableAnswers() throws {
+        let (view, presenter) = try XCTUnwrap(makeResults())
+
+        XCTAssertEqual(view.answers, presenter.presentableAnswers)
     }
     
     // MARK: - Helpers
@@ -104,10 +110,10 @@ class iOSSwiftUIViewControllerFactoryTest: XCTestCase {
         return controller?.rootView
     }
     
-    func makeResultsController() -> (controller: ResultViewController, presenter: ResultsPresenter) {
+    func makeResults() -> (view: ResultView, presenter: ResultsPresenter)? {
         let sut = makeSUT()
-        let controller = sut.resultViewController(for: correctAnswers) as! ResultViewController
+        let controller = sut.resultViewController(for: correctAnswers) as? UIHostingController<ResultView>
         let presenter = ResultsPresenter(userAnswers: correctAnswers, correctAnswers: correctAnswers, scorer: BasicScore.score)
-        return (controller, presenter)
+        return controller.map { ($0.rootView, presenter) }
     }
 }
