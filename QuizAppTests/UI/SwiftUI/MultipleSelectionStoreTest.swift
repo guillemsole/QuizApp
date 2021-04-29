@@ -12,10 +12,18 @@ struct MultipleSelectionStore {
     var canSubmit: Bool {
         !options.filter(\.isSelected).isEmpty
     }
-    internal init(options: [String]) {
+    
+    private let handler: ([String]) -> Void
+    
+    internal init(options: [String], handler: @escaping ([String]) -> Void = { _ in }) {
         self.options = options.map { MultipleSelectionOption(text: $0)}
+        self.handler = handler
     }
-
+    
+    func submit() {
+        guard canSubmit else { return }
+        handler(options.filter(\.isSelected).map(\.text))
+    }
 }
 
 struct MultipleSelectionOption {
@@ -52,5 +60,26 @@ class MultipleSelectionStoreTest: XCTestCase {
         
         sut.options[1].select()
         XCTAssertTrue(sut.canSubmit)
+    }
+    
+    func test_submit_notifiesHandlerWithSelectedOptions() {
+        var submittedOptions = [[String]]()
+        var sut = MultipleSelectionStore(options: ["o1", "o2"], handler: {
+            submittedOptions.append($0)
+        })
+        
+        sut.submit()
+        
+        XCTAssertEqual(submittedOptions, [])
+        
+        sut.options[0].select()
+        sut.submit()
+        
+        XCTAssertEqual(submittedOptions, [["o1"]])
+        
+        sut.options[1].select()
+        sut.submit()
+        
+        XCTAssertEqual(submittedOptions, [["o1"], ["o1", "o2"]])
     }
 }
