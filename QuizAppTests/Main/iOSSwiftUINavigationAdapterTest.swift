@@ -97,7 +97,7 @@ class iOSSwiftUINavigationAdapterTest: XCTestCase {
         XCTAssertEqual(playAgainCount, 3)
     }
     
-    func test_answerForQuestion_replacesNavigationStack() {
+    func test_answerForQuestion_replacesCurrentView() {
         let (sut, navigation) = makeSUT()
         
         sut.answer(for: singleAnswerQuestion) { _ in }
@@ -107,24 +107,34 @@ class iOSSwiftUINavigationAdapterTest: XCTestCase {
         XCTAssertNotNil(navigation.multipleCurrentView)
     }
     
-    func test_didCompleteQuiz_replacesNavigationStack() {
+    func test_didCompleteQuiz_replacesCurrentView() {
         let (sut, navigation) = makeSUT()
-        
+
         sut.didCompleteQuiz(withAnswers: correctAnswers)
         XCTAssertNotNil(navigation.resultCurrentView)
 
         sut.didCompleteQuiz(withAnswers: correctAnswers)
         XCTAssertNotNil(navigation.resultCurrentView)
     }
-    
-    private class NonAnimatedNavigationController: UINavigationController {
-        override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
-            super.setViewControllers(viewControllers, animated: false)
-        }
+
+    func test_publishesNavigationChanges() {
+        let (sut, navigation) = makeSUT()
         
-        override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-            super.pushViewController(viewController, animated: false)
-        }
+        var navigationChangeCount = 0
+        let cancellable = navigation.objectWillChange.sink { navigationChangeCount += 1 }
+        
+        XCTAssertEqual(navigationChangeCount, 0)
+        
+        sut.answer(for: singleAnswerQuestion) { _ in }
+        XCTAssertEqual(navigationChangeCount, 1)
+
+        sut.didCompleteQuiz(withAnswers: correctAnswers)
+        XCTAssertEqual(navigationChangeCount, 2)
+
+        sut.didCompleteQuiz(withAnswers: correctAnswers)
+        XCTAssertEqual(navigationChangeCount, 3)
+        
+        cancellable.cancel()
     }
     
     // MARK: - Helpers
@@ -140,8 +150,8 @@ class iOSSwiftUINavigationAdapterTest: XCTestCase {
         [(singleAnswerQuestion, ["A2", "A3", "A4"]), (multipleAnswerQuestion, ["A4", "A5", "A6"])]
     }
     
-    func makeSUT(playAgain: @escaping () -> Void = {}) -> (iOSSwiftUINavigationAdapter, UINavigationController) {
-        let navigation = NonAnimatedNavigationController()
+    func makeSUT(playAgain: @escaping () -> Void = {}) -> (iOSSwiftUINavigationAdapter, QuizNavigationStore) {
+        let navigation = QuizNavigationStore()
         let sut = iOSSwiftUINavigationAdapter(navigation: navigation, options: options, correctAnswers: correctAnswers, playAgain: playAgain)
         return (sut, navigation)
     }
@@ -167,16 +177,19 @@ class iOSSwiftUINavigationAdapterTest: XCTestCase {
     }
 }
 
-private extension UINavigationController {
+private extension QuizNavigationStore {
     var singleCurrentView: SingleAnswerQuestion? {
-        (topViewController as? UIHostingController<SingleAnswerQuestion>)?.rootView
+        if case let .single(view) = currentView { return view }
+        return nil
     }
     
     var multipleCurrentView: MultipleAnswerQuestion? {
-        (topViewController as? UIHostingController<MultipleAnswerQuestion>)?.rootView
+        if case let .multiple(view) = currentView { return view }
+        return nil
     }
     
     var resultCurrentView: ResultView? {
-        (topViewController as? UIHostingController<ResultView>)?.rootView
+        if case let .result(view) = currentView { return view }
+        return nil
     }
 }
