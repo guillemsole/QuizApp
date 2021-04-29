@@ -14,17 +14,20 @@ final class iOSSwiftUIViewControllerFactory: ViewControllerFactory {
     typealias Answers = [(question: Question<String>, answer: [String])]
     private let options: [Question<String>: [String]]
     private let correctAnswers: Answers
-
+    private let playAgain: () -> Void
+    
     private var questions: [Question<String>] {
         return correctAnswers.map { $0.question }
     }
 
-    init(options: [Question<String>: [String]], correctAnswers: Answers) {
+    init(options: [Question<String>: [String]], correctAnswers: Answers, playAgain: @escaping () -> Void = {}) {
         self.options = options
         self.correctAnswers = correctAnswers
+        self.playAgain = playAgain
+        
     }
     
-    func questionViewController(for question: Question<String>, answerCallback: @escaping ([String]) -> Void) -> UIViewController {
+    func questionViewController(for question: Question<String>, answerCallback: @escaping ([String]) -> Void ) -> UIViewController {
         guard let options = options[question] else {
             fatalError("Couldn't find options for question: \(question)")
         }
@@ -75,8 +78,6 @@ final class iOSSwiftUIViewControllerFactory: ViewControllerFactory {
                 title: presenter.title,
                 summary: presenter.summary,
                 answers: presenter.presentableAnswers,
-                playAgain: {
-            
-        }))
+                playAgain: playAgain))
     }
 }

@@ -81,6 +81,22 @@ class iOSSwiftUIViewControllerFactoryTest: XCTestCase {
         XCTAssertEqual(view.answers, presenter.presentableAnswers)
     }
     
+    func test_resultsViewController_createsViewControllerWithPlayAgainAction() throws {
+        var playAgainCount = 0
+        let (view, _) = try XCTUnwrap(makeResults(playAgain: { playAgainCount += 1}))
+
+        XCTAssertEqual(playAgainCount, 0)
+        
+        view.playAgain()
+        XCTAssertEqual(playAgainCount, 1)
+        
+        view.playAgain()
+        XCTAssertEqual(playAgainCount, 2)
+        
+        view.playAgain()
+        XCTAssertEqual(playAgainCount, 3)
+    }
+    
     // MARK: - Helpers
     
     var singleAnswerQuestion: Question<String> { .singleAnswer("Q1") }
@@ -94,8 +110,8 @@ class iOSSwiftUIViewControllerFactoryTest: XCTestCase {
         [(singleAnswerQuestion, ["A2", "A3", "A4"]), (multipleAnswerQuestion, ["A4", "A5", "A6"])]
     }
     
-    func makeSUT() -> iOSSwiftUIViewControllerFactory {
-        return iOSSwiftUIViewControllerFactory(options: options, correctAnswers: correctAnswers)
+    func makeSUT(playAgain: @escaping () -> Void = {}) -> iOSSwiftUIViewControllerFactory {
+        return iOSSwiftUIViewControllerFactory(options: options, correctAnswers: correctAnswers, playAgain: playAgain)
     }
     
     func makeSingleAnswerQuestion(question: Question<String> = .singleAnswer("Q1"), answerCallback: @escaping ([String]) -> Void = { _ in } ) -> SingleAnswerQuestion? {
@@ -110,8 +126,8 @@ class iOSSwiftUIViewControllerFactoryTest: XCTestCase {
         return controller?.rootView
     }
     
-    func makeResults() -> (view: ResultView, presenter: ResultsPresenter)? {
-        let sut = makeSUT()
+    func makeResults(playAgain: @escaping () -> Void = {}) -> (view: ResultView, presenter: ResultsPresenter)? {
+        let sut = makeSUT(playAgain: playAgain)
         let controller = sut.resultViewController(for: correctAnswers) as? UIHostingController<ResultView>
         let presenter = ResultsPresenter(userAnswers: correctAnswers, correctAnswers: correctAnswers, scorer: BasicScore.score)
         return controller.map { ($0.rootView, presenter) }
