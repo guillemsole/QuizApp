@@ -12,7 +12,7 @@ struct RoundedButton: View {
     let isEnabled: Bool
     let action: () -> Void
     
-    init(title: String, isEnabled: Bool, action: @escaping () -> Void) {
+    init(title: String, isEnabled: Bool = true, action: @escaping () -> Void) {
         self.title = title
         self.isEnabled = isEnabled
         self.action = action
