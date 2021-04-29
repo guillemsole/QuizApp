@@ -20,10 +20,12 @@ final class NavigationControllerRouter: QuizDataSource, QuizDelegate {
         case .singleAnswer:
             show(factory.questionViewController(for: question, answerCallback: completion))
         case .multipleAnswer:
-//            let button = UIBarButtonItem(title: "Submit", style: .done, target: nil, action: nil)
-//            let buttonController = SubmitButtonController(button, completion)
-            let controller = factory.questionViewController(for: question, answerCallback: completion)
-//            controller.navigationItem.rightBarButtonItem = button
+            let button = UIBarButtonItem(title: "Submit", style: .done, target: nil, action: nil)
+            let buttonController = SubmitButtonController(button, completion)
+            let controller = factory.questionViewController(for: question, answerCallback: { selection in
+                            buttonController.update(selection)
+                        })
+            controller.navigationItem.rightBarButtonItem = button
             show(controller)
         }
     }
@@ -33,7 +35,7 @@ final class NavigationControllerRouter: QuizDataSource, QuizDelegate {
     }
     
     private func show(_ viewController: UIViewController) {
-        navigationController.setViewControllers([viewController], animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }
 
