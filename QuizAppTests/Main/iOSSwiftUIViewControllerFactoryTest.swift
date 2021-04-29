@@ -45,21 +45,22 @@ class iOSSwiftUIViewControllerFactoryTest: XCTestCase {
         XCTAssertEqual(answers, [[view.options[0]], [view.options[1]]])
     }
     
-    func test_questionViewController_multipleAnswer_createsControllerWithTitle() {
+    func test_questionViewController_multipleAnswer_createsControllerWithTitle() throws {
         let presenter = QuestionPresenter(questions: [singleAnswerQuestion, multipleAnswerQuestion], question: multipleAnswerQuestion)
-        XCTAssertEqual(makeQuestionController(question: multipleAnswerQuestion).title, presenter.title)
+        let view = try XCTUnwrap(makeMultipleAnswerViewcontroller())
+        XCTAssertEqual(view.title, presenter.title)
     }
     
-    func test_questionViewController_multipleAnswer_createsController() {
-        XCTAssertEqual(makeQuestionController(question: multipleAnswerQuestion).question, "Q1")
+    func test_questionViewController_multipleAnswer_createsController() throws{
+        let view = try XCTUnwrap(makeMultipleAnswerViewcontroller())
+
+        XCTAssertEqual(view.question, "Q1")
     }
     
-    func test_questionViewController_multipleAnswer_createsControllerWithOptions() {
-        XCTAssertEqual(makeQuestionController(question: multipleAnswerQuestion).options, options[multipleAnswerQuestion])
-    }
-    
-    func test_questionViewController_multipleAnswer_createsControllerWithMultipleSelection() {
-        XCTAssertTrue(makeQuestionController(question: multipleAnswerQuestion).allowsMultipleSelection)
+    func test_questionViewController_multipleAnswer_createsControllerWithOptions() throws {
+        let view = try XCTUnwrap(makeMultipleAnswerViewcontroller())
+
+        XCTAssertEqual(view.store.options.map(\.text), options[multipleAnswerQuestion])
     }
     
     func test_resultsViewController_createsViewControllerWithSummary() {
@@ -93,15 +94,14 @@ class iOSSwiftUIViewControllerFactoryTest: XCTestCase {
     
     func makeSingleAnswerQuestion(question: Question<String> = .singleAnswer("Q1"), answerCallback: @escaping ([String]) -> Void = { _ in } ) -> SingleAnswerQuestion? {
         let sut = makeSUT()
-        let controller = sut.questionViewController(for:  question, answerCallback: answerCallback) as? UIHostingController<SingleAnswerQuestion>
+        let controller = sut.questionViewController(for: singleAnswerQuestion, answerCallback: answerCallback) as? UIHostingController<SingleAnswerQuestion>
         return controller?.rootView
     }
     
-    func makeQuestionController(question: Question<String> = .singleAnswer("Q1")) -> QuestionViewController {
+    func makeMultipleAnswerViewcontroller(answerCallback: @escaping ([String]) -> Void = { _ in } ) -> MultipleAnswerQuestion? {
         let sut = makeSUT()
-        
-        let controller = sut.questionViewController(for: question, answerCallback: { _ in }) as! QuestionViewController
-        return controller
+        let controller = sut.questionViewController(for: multipleAnswerQuestion, answerCallback: answerCallback) as? UIHostingController<MultipleAnswerQuestion>
+        return controller?.rootView
     }
     
     func makeResultsController() -> (controller: ResultViewController, presenter: ResultsPresenter) {
